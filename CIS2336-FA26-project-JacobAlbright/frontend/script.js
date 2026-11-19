@@ -16,6 +16,7 @@ function initializeNavigation() {
     toggle.setAttribute('aria-expanded', 'false');
     toggle.setAttribute('aria-label', 'Open navigation menu');
   }
+
   toggle.addEventListener('click', () => {
     const isOpen = toggle.getAttribute('aria-expanded') === 'true';
     if (isOpen) {
@@ -26,13 +27,16 @@ function initializeNavigation() {
       toggle.setAttribute('aria-label', 'Close navigation menu');
     }
   });
+
   nav.querySelectorAll('a').forEach(link => link.addEventListener('click', closeMenu));
+
   document.addEventListener('keydown', event => {
     if (event.key === 'Escape' && nav.classList.contains('is-open')) {
       closeMenu();
       toggle.focus();
     }
   });
+
   window.addEventListener('resize', () => {
     if (window.innerWidth > 780) closeMenu();
   });
@@ -129,6 +133,7 @@ function initializeBooking() {
     if (name && errors[name]) setError(name, '');
     clearResult();
   });
+
   form.addEventListener('change', event => {
     const name = event.target.name;
     if (name && errors[name]) setError(name, '');
@@ -162,6 +167,7 @@ function initializeBooking() {
     } else if (!validDateString(date) || date < todayLocalDate()) {
       setError('date', 'Choose a valid date that is today or later.');
     }
+
     if (!validTimeString(startTime)) setError('startTime', 'Choose a valid start time.');
     if (!validTimeString(endTime)) {
       setError('endTime', 'Choose a valid end time.');
@@ -177,6 +183,7 @@ function initializeBooking() {
         setError('startTime', 'Choose a start time later than the current time.');
       }
     }
+
     if (groupSize && (!/^\d+$/.test(groupSize) || Number(groupSize) < 1 || !Number.isSafeInteger(Number(groupSize)))) {
       setError('groupSize', 'Enter a whole number of at least 1.');
     }
@@ -198,6 +205,7 @@ function initializeBooking() {
     const readableTime = time => new Date(`2000-01-01T${time}:00`).toLocaleTimeString('en-US', {
       hour: 'numeric', minute: '2-digit'
     });
+
     result.innerHTML = '<h3>Request details validated</h3>' +
       '<p>Your information passed the front-end checks. <strong>This is not a confirmed booking.</strong> ' +
       'Live room availability and reservation approval will be added with the Node.js backend.</p>' +
